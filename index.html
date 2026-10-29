@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Linde Wonen: vazen, lampen, kussens, servies en kleine meubels.">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+<title>Linde Wonen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: rustige winkelpagina — menu, ronde categorieën, groot sfeerbeeld, ruim productraster. Warm wit, zand, zwart, olijf als enige accent. */
+:root {
+  --bg: #fbf9f5;
+  --sand: #f1ebe0;
+  --sand-2: #e6dccb;
+  --fg: #1b1a17;
+  --muted: #6f6a60;
+  --line: #e4ddd1;
+  --accent: #5c6b3c;
+  --accent-hover: #4d5a31;
+  --accent-fg: #ffffff;
+  --accent-soft: #e6e9da;
+  --card: #ffffff;
+  --nav: rgba(251, 249, 245, 0.82);
+  --scrim: rgba(27, 26, 23, 0.36);
+  --shadow: rgba(60, 50, 30, 0.14);
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Segoe UI", Helvetica, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #151412; --sand: #201e1a; --sand-2: #2b2823; --fg: #f3efe7; --muted: #a8a196; --line: #35322c;
+    --accent: #a6b67a; --accent-hover: #b5c48a; --accent-fg: #151412; --accent-soft: #2c3121;
+    --card: #1c1a17; --nav: rgba(21, 20, 18, 0.82); --scrim: rgba(0, 0, 0, 0.6); --shadow: rgba(0, 0, 0, 0.5);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #151412; --sand: #201e1a; --sand-2: #2b2823; --fg: #f3efe7; --muted: #a8a196; --line: #35322c;
+  --accent: #a6b67a; --accent-hover: #b5c48a; --accent-fg: #151412; --accent-soft: #2c3121;
+  --card: #1c1a17; --nav: rgba(21, 20, 18, 0.82); --scrim: rgba(0, 0, 0, 0.6); --shadow: rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font); font-size: 17px; line-height: 1.47; letter-spacing: -0.02em;
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--nav); }
+h1, h2, h3, h4 { margin: 0; text-wrap: balance; font-weight: 600; letter-spacing: -0.025em; }
+p { margin: 0; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+button, input, select { font: inherit; color: inherit; letter-spacing: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+img { display: block; }
+.gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 1180px; margin: 0 auto; }
+.photo { width: 100%; height: 100%; object-fit: cover; }
+
+/* Menu */
+.nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: var(--nav); backdrop-filter: saturate(160%) blur(20px); -webkit-backdrop-filter: saturate(160%) blur(20px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-in { height: 64px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 24px; }
+.logo { display: flex; align-items: center; gap: 10px; color: var(--fg); font-weight: 600; font-size: 21px; letter-spacing: -0.03em; }
+.logo:hover { text-decoration: none; }
+.logo svg { width: 26px; height: 26px; color: var(--accent); }
+.search { justify-self: center; width: min(460px, 100%); position: relative; }
+.search svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--muted); pointer-events: none; }
+.search input {
+  width: 100%; height: 40px; border-radius: 980px; border: 1px solid transparent; background: var(--sand);
+  padding: 0 16px 0 40px; font-size: 15px; transition: border-color .2s, background .2s;
+}
+.search input::placeholder { color: var(--muted); }
+.search input:focus { outline: none; border-color: var(--accent); background: var(--card); }
+.bag-btn { position: relative; background: none; border: 0; padding: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 15px; }
+.bag-btn svg { width: 22px; height: 22px; }
+.bag-count {
+  min-width: 20px; height: 20px; padding: 0 6px; border-radius: 10px; background: var(--accent); color: var(--accent-fg);
+  font-size: 12px; font-weight: 600; display: grid; place-items: center; font-variant-numeric: tabular-nums;
+}
+.bag-label { color: var(--fg); }
+
+/* Categorieën */
+.cats { padding-block: 40px 8px; }
+.cat-row { display: flex; justify-content: center; gap: clamp(16px, 4vw, 56px); overflow-x: auto; scrollbar-width: none; padding: 6px 4px 10px; }
+.cat-row::-webkit-scrollbar { display: none; }
+.cat { background: none; border: 0; padding: 0; cursor: pointer; display: grid; justify-items: center; gap: 12px; flex: 0 0 auto; }
+.cat .circle {
+  width: clamp(84px, 12vw, 132px); aspect-ratio: 1; border-radius: 50%; overflow: hidden; background: var(--sand);
+  box-shadow: 0 0 0 0 var(--accent); transition: box-shadow .25s, transform .35s cubic-bezier(.2,.7,.2,1);
+}
+.cat:hover .circle { transform: scale(1.04); }
+.cat[aria-pressed="true"] .circle { box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--accent); }
+.cat span { font-size: 15px; font-weight: 500; }
+.cat[aria-pressed="true"] span { color: var(--accent); }
+
+/* Sfeerbeeld */
+.hero { padding-block: 32px 0; }
+.hero-frame { position: relative; border-radius: 28px; overflow: hidden; aspect-ratio: 16 / 8; min-height: 380px; background: var(--sand); }
+.hero-frame img { animation: settle 1.6s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes settle { from { transform: scale(1.05); } to { transform: none; } }
+.hero-frame::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(20, 18, 14, 0.55) 0%, rgba(20, 18, 14, 0.15) 45%, rgba(20, 18, 14, 0) 70%); }
+.hero-copy { position: absolute; z-index: 1; left: clamp(24px, 5vw, 64px); bottom: clamp(28px, 6vw, 64px); max-width: 30ch; color: #fbf9f5; display: grid; gap: 14px; justify-items: start; }
+.hero-copy .eyebrow { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; opacity: .85; }
+.hero-copy h1 { font-size: clamp(40px, 6.4vw, 76px); line-height: 1.02; letter-spacing: -0.04em; font-weight: 700; }
+.hero-copy p { font-size: clamp(17px, 1.8vw, 21px); line-height: 1.35; opacity: .92; }
+
+/* Knoppen */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  background: var(--accent); color: var(--accent-fg); border: 0; border-radius: 980px;
+  padding: 12px 24px; font-size: 16px; font-weight: 500; cursor: pointer; transition: background .2s, transform .2s;
+}
+.btn:hover { background: var(--accent-hover); text-decoration: none; }
+.btn.light { background: #fbf9f5; color: #1b1a17; }
+.btn.light:hover { background: #ffffff; }
+.btn.block { width: 100%; border-radius: 14px; padding: 15px 22px; }
+.btn[disabled] { opacity: .4; cursor: not-allowed; }
+.more { font-size: 16px; font-weight: 500; }
+.more::after { content: " ›"; }
+
+/* Producten */
+.section { padding-block: 88px; }
+.head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px 32px; flex-wrap: wrap; margin-bottom: 32px; }
+.head h2 { font-size: clamp(32px, 4.4vw, 48px); line-height: 1.06; letter-spacing: -0.035em; }
+.head h2 span { color: var(--muted); }
+.head-tools { display: flex; align-items: center; gap: 12px; font-size: 15px; color: var(--muted); }
+.head-tools select { border: 1px solid var(--line); background: var(--card); border-radius: 980px; padding: 8px 14px; font-size: 14px; color: var(--fg); }
+.active-filter { display: inline-flex; align-items: center; gap: 8px; background: var(--accent-soft); color: var(--fg); border: 0; border-radius: 980px; padding: 7px 14px; font-size: 14px; cursor: pointer; }
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px 24px; }
+.card { background: none; border: 0; padding: 0; text-align: left; cursor: pointer; display: grid; gap: 14px; align-content: start; min-width: 0; }
+.card .img { position: relative; aspect-ratio: 4 / 5; border-radius: 20px; overflow: hidden; background: var(--sand); }
+.card .img img { transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+.card:hover .img img { transform: scale(1.04); }
+.badge { position: absolute; top: 12px; left: 12px; background: var(--card); color: var(--fg); font-size: 12px; font-weight: 600; padding: 5px 10px; border-radius: 980px; }
+.quick {
+  position: absolute; right: 12px; bottom: 12px; width: 40px; height: 40px; border-radius: 50%;
+  background: var(--card); color: var(--fg); display: grid; place-items: center;
+  opacity: 0; transform: translateY(6px); transition: opacity .25s, transform .25s; box-shadow: 0 4px 14px var(--shadow);
+}
+.card:hover .quick, .card:focus-visible .quick { opacity: 1; transform: none; }
+.quick svg { width: 16px; height: 16px; }
+.card .row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.card h3 { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
+.card .cat-name { font-size: 14px; color: var(--muted); margin-top: -10px; }
+.price { font-size: 16px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.empty { grid-column: 1 / -1; text-align: center; color: var(--muted); padding: 56px 0; }
+
+/* Verhalen */
+.stories { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.story { background: var(--sand); border-radius: 28px; overflow: hidden; display: grid; grid-template-rows: auto 1fr; border: 0; padding: 0; text-align: left; cursor: pointer; }
+.story .img { aspect-ratio: 4 / 3; overflow: hidden; }
+.story .img img { transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.story:hover .img img { transform: scale(1.03); }
+.story .txt { padding: 28px 32px 32px; display: grid; gap: 8px; align-content: start; }
+.story h3 { font-size: clamp(26px, 3vw, 34px); letter-spacing: -0.03em; }
+.story p { color: var(--muted); font-size: 16px; max-width: 40ch; }
+.story .more { color: var(--accent); margin-top: 6px; }
+
+/* Voordelen */
+.perks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding-block: 0 88px; }
+.perk { border-top: 1px solid var(--line); padding-top: 22px; display: grid; gap: 6px; }
+.perk h3 { font-size: 19px; }
+.perk p { color: var(--muted); font-size: 15px; max-width: 34ch; }
+
+footer { background: var(--sand); color: var(--muted); font-size: 13px; padding-block: 48px 40px; }
+.foot-cols { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 24px; margin-bottom: 36px; }
+.foot-cols h4 { color: var(--fg); font-size: 13px; margin-bottom: 10px; }
+.foot-cols ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.foot-cols a { color: var(--muted); }
+.foot-brand p { max-width: 32ch; margin-top: 10px; }
+.foot-bottom { border-top: 1px solid var(--sand-2); padding-top: 18px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+/* Productvenster */
+.scrim { position: fixed; inset: 0; background: var(--scrim); z-index: 80; opacity: 0; transition: opacity .3s; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.scrim.on { opacity: 1; }
+.sheet {
+  position: fixed; z-index: 90; left: 50%; top: 50%; transform: translate(-50%, -48%) scale(.98); opacity: 0;
+  width: min(1000px, calc(100vw - 32px)); max-height: calc(100dvh - 48px); overflow: auto;
+  background: var(--bg); border-radius: 28px; box-shadow: 0 30px 80px var(--shadow);
+  display: grid; grid-template-columns: 1.05fr 1fr; transition: opacity .3s, transform .4s cubic-bezier(.2,.7,.2,1);
+}
+.sheet.on { opacity: 1; transform: translate(-50%, -50%); }
+.sheet-img { background: var(--sand); min-height: 360px; min-width: 0; }
+.sheet-body { padding: 44px 40px 36px; display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+.sheet-body .crumb { font-size: 13px; color: var(--muted); }
+.sheet-body h2 { font-size: 36px; letter-spacing: -0.035em; line-height: 1.08; margin-top: 4px; }
+.sheet-body .lead { color: var(--muted); font-size: 17px; }
+.sheet-body .p-price { font-size: 22px; font-variant-numeric: tabular-nums; }
+.opt-label { font-size: 14px; font-weight: 600; margin-bottom: 10px; display: flex; justify-content: space-between; }
+.opt-label span { color: var(--muted); font-weight: 400; }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opt { border: 1px solid var(--line); background: var(--card); border-radius: 980px; padding: 9px 16px; font-size: 15px; cursor: pointer; }
+.opt:hover { border-color: var(--muted); }
+.opt[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.specs { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 8px 20px; font-size: 14px; border-top: 1px solid var(--line); padding-top: 18px; }
+.specs dt { color: var(--muted); }
+.specs dd { margin: 0; font-variant-numeric: tabular-nums; }
+.buy { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: stretch; }
+.stepper { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.stepper button { width: 44px; height: 100%; min-height: 50px; border: 0; background: none; cursor: pointer; font-size: 18px; }
+.stepper span { min-width: 28px; text-align: center; font-variant-numeric: tabular-nums; }
+.hint { font-size: 13px; color: var(--muted); }
+.close {
+  position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border-radius: 50%; z-index: 2;
+  background: var(--card); border: 0; cursor: pointer; display: grid; place-items: center; box-shadow: 0 2px 10px var(--shadow);
+}
+.close svg { width: 12px; height: 12px; }
+
+/* Winkelmand */
+.drawer {
+  position: fixed; z-index: 90; top: 0; right: 0; bottom: 0; width: min(440px, 100vw);
+  background: var(--bg); box-shadow: -20px 0 60px var(--shadow);
+  transform: translateX(100%); transition: transform .4s cubic-bezier(.2,.7,.2,1);
+  display: flex; flex-direction: column;
+  padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); padding-right: env(safe-area-inset-right, 0px);
+}
+.drawer.on { transform: none; }
+.drawer-head { padding: 26px 24px 14px; display: flex; justify-content: space-between; align-items: center; }
+.drawer-head h2 { font-size: 28px; letter-spacing: -0.03em; }
+.drawer-head .close { position: static; box-shadow: none; background: var(--sand); }
+.drawer-body { flex: 1; overflow: auto; padding: 0 24px; }
+.drawer-foot { padding: 18px 24px 24px; border-top: 1px solid var(--line); display: grid; gap: 10px; }
+.line { display: grid; grid-template-columns: 84px 1fr auto; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); align-items: center; }
+.line .thumb { border-radius: 14px; overflow: hidden; aspect-ratio: 1; background: var(--sand); }
+.line h4 { font-size: 15px; }
+.line .sub { font-size: 13px; color: var(--muted); }
+.qty { display: inline-flex; align-items: center; gap: 10px; margin-top: 6px; font-size: 14px; font-variant-numeric: tabular-nums; }
+.qty button { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--line); background: var(--card); cursor: pointer; line-height: 1; }
+.line .lp { font-size: 15px; font-variant-numeric: tabular-nums; align-self: start; }
+.sum { display: flex; justify-content: space-between; font-size: 15px; font-variant-numeric: tabular-nums; }
+.sum.total { font-size: 19px; font-weight: 600; }
+.free { color: var(--accent); }
+.progress { font-size: 13px; color: var(--muted); }
+.bar { height: 4px; border-radius: 2px; background: var(--sand-2); overflow: hidden; margin-top: 6px; }
+.bar i { display: block; height: 100%; background: var(--accent); transition: width .3s; }
+.bag-empty { text-align: center; padding: 64px 0; color: var(--muted); display: grid; gap: 10px; justify-items: center; }
+.bag-empty svg { width: 44px; height: 44px; opacity: .5; }
+.form { display: grid; gap: 12px; padding: 4px 0 20px; }
+.form .row2 { display: grid; grid-template-columns: 1fr 1.6fr; gap: 10px; }
+.form label { display: grid; gap: 4px; font-size: 13px; color: var(--muted); }
+.form input[type="text"], .form input[type="email"] { width: 100%; border: 1px solid var(--line); background: var(--card); border-radius: 12px; padding: 10px 12px; font-size: 15px; color: var(--fg); }
+.pay { display: grid; gap: 8px; }
+.pay label { display: flex; gap: 10px; align-items: center; border: 1px solid var(--line); border-radius: 12px; padding: 12px; color: var(--fg); font-size: 15px; cursor: pointer; }
+.pay label:has(input:checked) { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.pay input { accent-color: var(--accent); }
+.demo-note { font-size: 12px; color: var(--muted); }
+.err { font-size: 13px; color: #b3261e; min-height: 18px; }
+.done { text-align: center; padding: 56px 0; display: grid; gap: 10px; justify-items: center; }
+.done svg { width: 56px; height: 56px; color: var(--accent); }
+.done h3 { font-size: 24px; }
+.done p { color: var(--muted); font-size: 15px; max-width: 30ch; }
+.back { background: none; border: 0; color: var(--accent); cursor: pointer; padding: 0; font-size: 15px; justify-self: start; }
+
+.toast {
+  position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px);
+  background: var(--fg); color: var(--bg); padding: 12px 20px; border-radius: 980px; font-size: 14px;
+  opacity: 0; transition: opacity .3s, transform .3s; z-index: 100; pointer-events: none; white-space: nowrap;
+}
+.toast.on { opacity: 1; transform: translate(-50%, 0); }
+
+@media (max-width: 980px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+  .foot-cols { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 860px) {
+  .sheet { grid-template-columns: 1fr; }
+  .sheet-img { aspect-ratio: 4 / 3; min-height: 0; }
+  .sheet-body { padding: 26px 22px 28px; }
+  .stories { grid-template-columns: 1fr; }
+}
+@media (max-width: 700px) {
+  .nav-in { grid-template-columns: auto 1fr auto; gap: 12px; }
+  .bag-label { display: none; }
+  .grid { grid-template-columns: repeat(2, 1fr); gap: 28px 14px; }
+  .cat-row { justify-content: flex-start; }
+  .hero-frame { aspect-ratio: 4 / 5; min-height: 0; }
+  .hero-frame img { object-position: 38% 50%; }
+  .hero-frame::after { background: linear-gradient(0deg, rgba(20, 18, 14, 0.62) 0%, rgba(20, 18, 14, 0.1) 55%, rgba(20, 18, 14, 0) 75%); }
+  .perks { grid-template-columns: 1fr; }
+  .section { padding-block: 64px; }
+  .quick { opacity: 1; transform: none; width: 34px; height: 34px; }
+}
+@media (max-width: 420px) {
+  .logo span { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+
+<nav class="nav gutter" aria-label="Hoofdmenu">
+  <div class="wrap nav-in">
+    <a class="logo" href="#top" aria-label="Linde Wonen, naar boven">
+      <svg viewBox="0 0 26 26" aria-hidden="true"><path fill="currentColor" d="M13 2c5 4 7.5 8.3 7.5 12.2A7.5 7.5 0 0 1 14 21.6V25h-2v-3.4a7.5 7.5 0 0 1-6.5-7.4C5.5 10.3 8 6 13 2Zm0 3.1c-3.5 3.2-5.5 6.4-5.5 9.1a5.5 5.5 0 0 0 4.5 5.4v-6.3l-2.6-2.6 1.4-1.4 1.2 1.2V7.8h2v5.7l1.2-1.2 1.4 1.4-2.6 2.6v3.3a5.5 5.5 0 0 0 4.5-5.4c0-2.7-2-5.9-5.5-9.1Z"/></svg>
+      <span>Linde</span>
+    </a>
+    <label class="search" for="q">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 11l3.6 3.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <input type="search" id="q" placeholder="Zoek vazen, lampen, kussens…" autocomplete="off" aria-label="Zoeken">
+    </label>
+    <button class="bag-btn" id="bagBtn" aria-label="Winkelmand openen">
+      <svg viewBox="0 0 22 22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" d="M3.5 7.5h15l-1.2 12H4.7Z M7.5 7.5V6a3.5 3.5 0 0 1 7 0v1.5"/></svg>
+      <span class="bag-label">Mand</span>
+      <span class="bag-count" id="bagCount">0</span>
+    </button>
+  </div>
+</nav>
+
+<main id="top">
+  <section class="cats gutter" aria-label="Categorieën">
+    <div class="wrap cat-row" id="catRow"></div>
+  </section>
+
+  <section class="hero gutter">
+    <div class="wrap">
+      <div class="hero-frame">
+        <img class="photo" src="wonen/hero.jpg" alt="Lichte woonkamer met olijfgroene bank, houten salontafel en een gebreide poef">
+        <div class="hero-copy">
+          <span class="eyebrow">Najaar 2026</span>
+          <h1>Maak ruimte voor thuis.</h1>
+          <p>Zacht linnen, warm hout en handgedraaide klei. Voor een huis dat tot rust komt.</p>
+          <button class="btn light" id="heroCta">Ontdek de collectie</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section gutter" id="shop" aria-labelledby="shopTitle">
+    <div class="wrap">
+      <div class="head">
+        <h2 id="shopTitle"><span id="shopLabel">Nieuw binnen.</span> <span>Rustig gekozen.</span></h2>
+        <div class="head-tools">
+          <button class="active-filter" id="clearFilter" hidden></button>
+          <label for="sort" class="sr">Sorteer</label>
+          <select id="sort">
+            <option value="new">Nieuwste eerst</option>
+            <option value="low">Prijs laag–hoog</option>
+            <option value="high">Prijs hoog–laag</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section class="gutter" aria-label="Inspiratie">
+    <div class="wrap stories">
+      <button class="story" data-cat="textiel">
+        <div class="img"><img class="photo" src="wonen/zacht.jpg" alt="Woonkamer met lichte bank, kussens, plaid en een rieten poef" loading="lazy"></div>
+        <div class="txt">
+          <h3>Zacht wonen</h3>
+          <p>Linnen kussens en gebreide plaids in zand, roest en kalkwit. Goed voor lange avonden.</p>
+          <span class="more">Bekijk textiel</span>
+        </div>
+      </button>
+      <button class="story" data-cat="servies">
+        <div class="img"><img class="photo" src="wonen/tafel.jpg" alt="Verzameling witte en crèmekleurige borden van bovenaf" loading="lazy"></div>
+        <div class="txt">
+          <h3>Aan tafel</h3>
+          <p>Steengoed met een zichtbare rand, kommen van hout en bekers die goed in de hand liggen.</p>
+          <span class="more">Bekijk servies</span>
+        </div>
+      </button>
+    </div>
+  </section>
+
+  <section class="section gutter" id="service" aria-label="Service">
+    <div class="wrap perks" style="padding-block:0">
+      <div class="perk"><h3>Gratis bezorgd vanaf € 50</h3><p>Op werkdagen voor 21.00 uur besteld, binnen twee dagen thuis. Meubels plannen we met je in.</p></div>
+      <div class="perk"><h3>30 dagen bedenktijd</h3><p>Past het toch niet bij je interieur? Retourneren kan in elke Linde-winkel of per post.</p></div>
+      <div class="perk"><h3>Advies van een stylist</h3><p>Plan een gratis videogesprek van 20 minuten over kleur, licht en indeling.</p></div>
+    </div>
+  </section>
+</main>
+
+<footer class="gutter">
+  <div class="wrap">
+    <div class="foot-cols">
+      <div class="foot-brand"><strong style="color:var(--fg);font-size:17px">Linde Wonen</strong><p>Een fictieve woonwinkel als voorbeeld. Er worden geen echte bestellingen geplaatst.</p></div>
+      <div><h4>Winkel</h4><ul><li><a href="#shop" data-cat="verlichting">Verlichting</a></li><li><a href="#shop" data-cat="meubels">Meubels</a></li><li><a href="#shop" data-cat="accessoires">Woonaccessoires</a></li><li><a href="#shop" data-cat="textiel">Textiel</a></li><li><a href="#shop" data-cat="servies">Servies</a></li></ul></div>
+      <div><h4>Service</h4><ul><li><a href="#service">Bezorgen</a></li><li><a href="#service">Retourneren</a></li><li><a href="#service">Stylingadvies</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li>hallo@linde-wonen.nl</li><li>Ma–za 9.00–18.00</li></ul></div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 Linde Wonen. Prijzen incl. btw.</span><span>Foto's via Unsplash</span></div>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim" hidden></div>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="pName" hidden>
+  <button class="close" id="sheetClose" aria-label="Sluiten"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1 1l10 10M11 1 1 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+  <div class="sheet-img" id="pImg"></div>
+  <div class="sheet-body">
+    <div>
+      <p class="crumb" id="pCrumb"></p>
+      <h2 id="pName"></h2>
+    </div>
+    <p class="lead" id="pLead"></p>
+    <p class="p-price" id="pPrice"></p>
+    <div id="pOptWrap">
+      <div class="opt-label"><span style="color:var(--fg);font-weight:600" id="pOptLabel"></span><span id="pOptValue"></span></div>
+      <div class="opts" id="pOpts" role="group"></div>
+    </div>
+    <div class="buy">
+      <div class="stepper" aria-label="Aantal"><button id="qMinus" aria-label="Eén minder">−</button><span id="qVal">1</span><button id="qPlus" aria-label="Eén meer">+</button></div>
+      <button class="btn block" id="addBtn">In winkelmand</button>
+    </div>
+    <p class="hint" id="pHint"></p>
+    <dl class="specs" id="pSpecs"></dl>
+  </div>
+</div>
+
+<aside class="drawer" id="drawer" aria-label="Winkelmand" hidden>
+  <div class="drawer-head">
+    <h2 id="drawerTitle">Winkelmand</h2>
+    <button class="close" id="drawerClose" aria-label="Winkelmand sluiten"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1 1l10 10M11 1 1 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-foot" id="drawerFoot"></div>
+</aside>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<style>.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }</style>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const eur = new Intl.NumberFormat("nl-NL", { style: "currency", currency: "EUR" });
+  const fmt = n => eur.format(n).replace(",00", ",–");
+
+  const CATS = [
+    { id: "verlichting", name: "Verlichting", img: "cat-verlichting", alt: "Witte hanglamp tegen een petrolkleurige muur" },
+    { id: "meubels", name: "Meubels", img: "cat-meubels", alt: "Lichtgrijze fauteuil op houten poten" },
+    { id: "accessoires", name: "Woonaccessoires", img: "cat-accessoires", alt: "Rij keramische vazen in natuurtinten" },
+    { id: "textiel", name: "Textiel", img: "cat-textiel", alt: "Wit kussen met grijze gebreide plaid" },
+    { id: "servies", name: "Servies", img: "cat-servies", alt: "Crèmekleurig bord met twee houten kommen" }
+  ];
+  const catName = id => CATS.find(c => c.id === id).name;
+
+  const P = [
+    { id: "paddo", name: "Paddo tafellamp", cat: "verlichting", price: 59, isNew: true, rank: 1, img: "lamp-paddo",
+      alt: "Roze tafellamp met geplooide kap op een donker houten kastje",
+      desc: "Een geplooide kap van glas op een messing voet. Geeft zacht, warm licht.",
+      opt: { label: "Kleur", values: ["Poederroze", "Kalkwit"] },
+      specs: [["Afmetingen", "Ø 22 × 34 cm"], ["Materiaal", "Opaalglas, messing"], ["Lichtbron", "E14, max. 25 W (niet inbegrepen)"], ["Snoer", "180 cm, textiel"]] },
+    { id: "atelier", name: "Atelier hanglamp", cat: "verlichting", price: 69, isNew: false, rank: 6, img: "lamp-atelier",
+      alt: "Grijze metalen hanglamp met open onderkant",
+      desc: "Gepoedercoat staal met een witte binnenkant die het licht naar beneden werpt.",
+      opt: { label: "Kleur", values: ["Leigrijs", "Olijf", "Zwart"] },
+      specs: [["Afmetingen", "Ø 30 × 24 cm"], ["Materiaal", "Staal, gepoedercoat"], ["Lichtbron", "E27, max. 40 W"], ["Ophanging", "Verstelbaar tot 150 cm"]] },
+    { id: "ananas", name: "Ananas tafellamp", cat: "verlichting", price: 49, isNew: false, rank: 9, img: "lamp-ananas",
+      alt: "Tafellamp met witte keramische voet in ananasreliëf en linnen kap",
+      desc: "Een keramische voet met reliëf en een kap van linnen.",
+      specs: [["Afmetingen", "Ø 25 × 42 cm"], ["Materiaal", "Keramiek, linnen"], ["Lichtbron", "E27, max. 40 W"]] },
+    { id: "kiel", name: "Kiel fauteuil", cat: "meubels", price: 249, isNew: true, rank: 2, img: "fauteuil",
+      alt: "Lichtgrijze gestoffeerde fauteuil op schuine eikenhouten poten",
+      desc: "Een lage loungestoel met een kuip van wolmix en poten van massief eiken.",
+      opt: { label: "Stof", values: ["Kiezelgrijs", "Zand", "Mosgroen"] },
+      specs: [["Afmetingen", "B 64 × D 70 × H 78 cm"], ["Zithoogte", "43 cm"], ["Materiaal", "Wolmix, massief eiken"], ["Levertijd", "3–4 weken"]] },
+    { id: "nest", name: "Nest bijzettafels", cat: "meubels", price: 129, isNew: false, rank: 7, img: "nest",
+      alt: "Twee in elkaar geschoven houten bijzettafels",
+      desc: "Set van twee tafels in notenfineer. Schuif ze in elkaar of zet ze apart.",
+      specs: [["Groot", "B 50 × D 35 × H 45 cm"], ["Klein", "B 42 × D 35 × H 40 cm"], ["Materiaal", "Notenfineer op multiplex"]] },
+    { id: "bram", name: "Bram kruk", cat: "meubels", price: 79, isNew: false, rank: 10, img: "bram",
+      alt: "Witgeschilderde houten kruk met voetensteun tegen een blauwe achtergrond",
+      desc: "Een hoge kruk van beuken voor aan het aanrecht of als plantentafel.",
+      opt: { label: "Hoogte", values: ["45 cm", "65 cm"] },
+      specs: [["Afmetingen", "Zitting 30 × 30 cm"], ["Materiaal", "Massief beuken, gelakt"], ["Draagvermogen", "120 kg"]] },
+    { id: "melkkruk", name: "Melkkrukje", cat: "meubels", price: 39, isNew: false, rank: 14, img: "melkkruk",
+      alt: "Klein houten krukje met drie poten tegen een witte muur",
+      desc: "Laag krukje met drie poten. Ook mooi als bijzettafeltje naast de bank.",
+      specs: [["Afmetingen", "Ø 28 × 30 cm"], ["Materiaal", "Gerecycled teak"]] },
+    { id: "klei", name: "Klei vazen, set van 3", cat: "accessoires", price: 45, isNew: true, rank: 3, img: "vaas-klei",
+      alt: "Drie ongeglazuurde kleivazen op een betonnen sokkel",
+      desc: "Ongeglazuurd aardewerk met een ruwe huid. Elke vaas is net iets anders.",
+      specs: [["Afmetingen", "H 14, 18 en 22 cm"], ["Materiaal", "Terracotta, binnenkant geglazuurd"], ["Waterdicht", "Ja"]] },
+    { id: "melk", name: "Melk vaas", cat: "accessoires", price: 35, isNew: false, rank: 8, img: "vaas-melk",
+      alt: "Bolle witte vaas op een marmeren sokkel naast een plant",
+      desc: "Een bolle vaas met een matte, melkwitte glazuur.",
+      opt: { label: "Maat", values: ["Klein", "Groot"] },
+      specs: [["Afmetingen", "Klein H 20 cm · Groot H 28 cm"], ["Materiaal", "Steengoed, mat geglazuurd"]] },
+    { id: "kleur", name: "Kleur vazen", cat: "accessoires", price: 29, isNew: true, rank: 4, img: "vaas-kleur",
+      alt: "Zwarte, roestrode en blauwe vazen met een kommetje op een ribbelige houten sokkel",
+      desc: "Vazen met een effen glazuur in drie diepe kleuren. Mooi in een groepje.",
+      opt: { label: "Kleur", values: ["Inktblauw", "Roest", "Zwart"] },
+      specs: [["Afmetingen", "H 18–26 cm"], ["Materiaal", "Steengoed"]] },
+    { id: "streep", name: "Streep kussen", cat: "textiel", price: 29, isNew: false, rank: 11, img: "kussen-streep",
+      alt: "Wit kussen met brede indigoblauwe strepen",
+      desc: "Handgeweven katoen met indigo strepen en een verborgen rits.",
+      opt: { label: "Maat", values: ["45 × 45 cm", "50 × 50 cm"] },
+      specs: [["Materiaal", "100% katoen"], ["Vulling", "Gerecyclede polyester, inbegrepen"], ["Wassen", "Hoes op 30 °C"]] },
+    { id: "roest", name: "Linnen kussen", cat: "textiel", price: 34, isNew: true, rank: 5, img: "kussen-roest",
+      alt: "Roestkleurig en wit linnen kussen op een geweven kleed",
+      desc: "Gewassen linnen dat met de tijd alleen maar zachter wordt.",
+      opt: { label: "Kleur", values: ["Roest", "Kalkwit", "Olijf"] },
+      specs: [["Afmetingen", "50 × 50 cm"], ["Materiaal", "100% Europees linnen"], ["Vulling", "Veren, inbegrepen"]] },
+    { id: "plaid", name: "Grof gebreide plaid", cat: "textiel", price: 59, isNew: false, rank: 12, img: "plaid",
+      alt: "Grijze gebreide plaid over een bank met een wit kussen",
+      desc: "Een zware plaid met een grove kabelsteek en franjes.",
+      specs: [["Afmetingen", "130 × 170 cm"], ["Materiaal", "Katoen en gerecyclede wol"], ["Wassen", "Wolprogramma, 30 °C"]] },
+    { id: "zand", name: "Zand bord en kommen", cat: "servies", price: 24, isNew: false, rank: 13, img: "servies-zand",
+      alt: "Crèmekleurig bord naast twee houten kommen op wit linnen",
+      desc: "Een plat bord van steengoed met twee kommen van acaciahout.",
+      specs: [["Bord", "Ø 27 cm"], ["Kommen", "Ø 13 cm"], ["Vaatwasser", "Alleen het bord"]] },
+    { id: "rand", name: "Randbord", cat: "servies", price: 12, isNew: false, rank: 15, img: "bord-rand",
+      alt: "Lichtgrijs bord met een bruine rand",
+      desc: "Grijs geglazuurd met een ongeglazuurde, bruine rand.",
+      opt: { label: "Maat", values: ["Ontbijt Ø 21 cm", "Diner Ø 27 cm"] },
+      specs: [["Materiaal", "Steengoed"], ["Vaatwasser", "Ja"], ["Magnetron", "Ja"]] },
+    { id: "mos", name: "Mos beker", cat: "servies", price: 14, isNew: true, rank: 6.5, img: "beker-mos",
+      alt: "Groene gespikkelde keramische beker op een houten tafel",
+      desc: "Een gespikkelde beker zonder oor. Past 300 ml koffie of thee.",
+      specs: [["Afmetingen", "Ø 8 × 11 cm"], ["Inhoud", "300 ml"], ["Vaatwasser", "Ja"]] }
+  ];
+  const byId = Object.fromEntries(P.map(p => [p.id, p]));
+  const imgTag = (src, alt, lazy = true) => `<img class="photo" src="wonen/${src}.jpg" alt="${alt}"${lazy ? ' loading="lazy"' : ""}>`;
+
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+  };
+  let bag = store.get("linde-bag", []).filter(l => byId[l.id]);
+
+  /* ---------- Categorieën en filters ---------- */
+  let fCat = "", fQ = "", sort = "new";
+  $("#catRow").innerHTML = CATS.map(c => `
+    <button class="cat" data-cat="${c.id}" aria-pressed="false">
+      <span class="circle">${imgTag(c.img, c.alt, false)}</span>
+      <span>${c.name}</span>
+    </button>`).join("");
+
+  function setCat(id, scroll) {
+    fCat = fCat === id && !scroll ? "" : id;
+    render();
+    if (scroll) $("#shop").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  document.addEventListener("click", e => {
+    const c = e.target.closest("[data-cat]");
+    if (c) { e.preventDefault(); setCat(c.dataset.cat, !c.classList.contains("cat")); return; }
+    const o = e.target.closest("[data-open]");
+    if (o) openProduct(o.dataset.open, e.target.closest(".quick"));
+  });
+  $("#heroCta").onclick = () => { fCat = ""; render(); $("#shop").scrollIntoView({ behavior: "smooth" }); };
+  $("#clearFilter").onclick = () => { fCat = ""; fQ = ""; $("#q").value = ""; render(); };
+  $("#sort").onchange = e => { sort = e.target.value; render(); };
+  let qTimer;
+  $("#q").addEventListener("input", e => {
+    fQ = e.target.value.trim().toLowerCase(); render();
+    clearTimeout(qTimer);
+    if (fQ) qTimer = setTimeout(() => $("#shop").scrollIntoView({ behavior: "smooth", block: "start" }), 500);
+  });
+
+  function render() {
+    document.querySelectorAll(".cat").forEach(b => b.setAttribute("aria-pressed", b.dataset.cat === fCat));
+    let list = P.filter(p => (!fCat || p.cat === fCat) &&
+      (!fQ || (p.name + " " + catName(p.cat) + " " + p.desc).toLowerCase().includes(fQ)));
+    list = list.slice().sort(sort === "low" ? (a, b) => a.price - b.price : sort === "high" ? (a, b) => b.price - a.price : (a, b) => a.rank - b.rank);
+    $("#shopLabel").textContent = fQ ? `Resultaten voor ‘${$("#q").value.trim()}’.` : fCat ? `${catName(fCat)}.` : "Nieuw binnen.";
+    const cf = $("#clearFilter");
+    cf.hidden = !(fCat || fQ);
+    cf.textContent = `${list.length} ${list.length === 1 ? "product" : "producten"} · Wis filter ✕`;
+    $("#grid").innerHTML = list.length ? list.map(p => `
+      <button class="card" data-open="${p.id}" aria-label="${p.name}, ${fmt(p.price)}">
+        <div class="img">${imgTag(p.img, p.alt)}${p.isNew ? '<span class="badge">Nieuw</span>' : ""}
+          <span class="quick" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span></div>
+        <div class="row"><h3>${p.name}</h3><span class="price">${fmt(p.price)}</span></div>
+        <p class="cat-name">${catName(p.cat)}</p>
+      </button>`).join("")
+      : `<p class="empty">Niets gevonden. Probeer een ander woord, zoals ‘vaas’ of ‘linnen’.</p>`;
+  }
+  render();
+
+  /* ---------- Overlays ---------- */
+  let lastFocus = null;
+  function showLayer(el) {
+    lastFocus = document.activeElement;
+    $("#scrim").hidden = false; el.hidden = false;
+    requestAnimationFrame(() => { $("#scrim").classList.add("on"); el.classList.add("on"); });
+    document.body.style.overflow = "hidden";
+  }
+  function hideLayers() {
+    ["#sheet", "#drawer"].forEach(s => $(s).classList.remove("on"));
+    $("#scrim").classList.remove("on");
+    document.body.style.overflow = "";
+    setTimeout(() => { ["#sheet", "#drawer", "#scrim"].forEach(s => { if (!$(s).classList.contains("on")) $(s).hidden = true; }); }, 350);
+    if (lastFocus) lastFocus.focus({ preventScroll: true });
+  }
+  $("#scrim").onclick = hideLayers;
+  $("#sheetClose").onclick = hideLayers;
+  $("#drawerClose").onclick = hideLayers;
+  document.addEventListener("keydown", e => { if (e.key === "Escape") hideLayers(); });
+
+  /* ---------- Product ---------- */
+  let cur = null, curOpt = null, qty = 1;
+  function addLine(p, opt, n) {
+    const key = `${p.id}|${opt || ""}`;
+    const hit = bag.find(l => l.key === key);
+    hit ? hit.qty += n : bag.push({ key, id: p.id, opt, qty: n });
+    saveBag();
+    toast(`${p.name}${opt ? " (" + opt + ")" : ""} toegevoegd`);
+  }
+  function openProduct(id, quick) {
+    cur = byId[id]; qty = 1; curOpt = cur.opt ? cur.opt.values[0] : null;
+    if (quick) { addLine(cur, curOpt, 1); return; }
+    $("#pImg").innerHTML = imgTag(cur.img, cur.alt, false);
+    $("#pCrumb").textContent = catName(cur.cat) + (cur.isNew ? " · Nieuw" : "");
+    $("#pName").textContent = cur.name;
+    $("#pLead").textContent = cur.desc;
+    $("#pPrice").textContent = fmt(cur.price);
+    $("#pSpecs").innerHTML = cur.specs.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("");
+    $("#pOptWrap").hidden = !cur.opt;
+    if (cur.opt) {
+      $("#pOptLabel").textContent = cur.opt.label;
+      $("#pOpts").setAttribute("aria-label", cur.opt.label);
+      $("#pOpts").innerHTML = cur.opt.values.map(v => `<button class="opt" data-v="${v}">${v}</button>`).join("");
+      $("#pOpts").onclick = e => { const b = e.target.closest(".opt"); if (b) { curOpt = b.dataset.v; paint(); } };
+    }
+    $("#pHint").textContent = cur.cat === "meubels" ? "Wordt met afspraak bezorgd. Gratis vanaf € 50." : "Op voorraad. Binnen twee werkdagen bezorgd.";
+    paint();
+    if ($("#sheet").hidden) showLayer($("#sheet"));
+    setTimeout(() => $("#sheetClose").focus({ preventScroll: true }), 50);
+  }
+  function paint() {
+    $("#qVal").textContent = qty;
+    $("#addBtn").textContent = `In winkelmand · ${fmt(cur.price * qty)}`;
+    if (cur.opt) {
+      $("#pOptValue").textContent = curOpt;
+      [...$("#pOpts").children].forEach(b => b.setAttribute("aria-pressed", b.dataset.v === curOpt));
+    }
+  }
+  $("#qMinus").onclick = () => { qty = Math.max(1, qty - 1); paint(); };
+  $("#qPlus").onclick = () => { qty = Math.min(20, qty + 1); paint(); };
+  $("#addBtn").onclick = () => { addLine(cur, curOpt, qty); hideLayers(); };
+
+  /* ---------- Winkelmand ---------- */
+  const SHIP = 5.95, FREE = 50;
+  let view = "bag";
+  function saveBag() { store.set("linde-bag", bag); renderCount(); if (!$("#drawer").hidden) renderBag(); }
+  function renderCount() {
+    const n = bag.reduce((a, l) => a + l.qty, 0);
+    $("#bagCount").textContent = n;
+    $("#bagBtn").setAttribute("aria-label", n ? `Winkelmand, ${n} artikel${n > 1 ? "en" : ""}` : "Winkelmand openen");
+  }
+  const subtotal = () => bag.reduce((a, l) => a + byId[l.id].price * l.qty, 0);
+  function renderBag() {
+    const body = $("#drawerBody"), foot = $("#drawerFoot");
+    if (view === "done") {
+      $("#drawerTitle").textContent = "Bedankt";
+      body.innerHTML = `<div class="done"><svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="26" fill="none" stroke="currentColor" stroke-width="2"/><path d="M17 29l7 7 15-16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3>Bestelling ontvangen</h3><p>Dit is een voorbeeldwinkel, dus er is niets verstuurd of afgerekend.</p></div>`;
+      foot.innerHTML = `<button class="btn block" id="keep">Verder winkelen</button>`;
+      $("#keep").onclick = () => { view = "bag"; hideLayers(); };
+      return;
+    }
+    if (!bag.length) {
+      $("#drawerTitle").textContent = "Winkelmand";
+      body.innerHTML = `<div class="bag-empty"><svg viewBox="0 0 22 22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" d="M3.5 7.5h15l-1.2 12H4.7Z M7.5 7.5V6a3.5 3.5 0 0 1 7 0v1.5"/></svg><p>Je winkelmand is nog leeg.</p></div>`;
+      foot.innerHTML = `<button class="btn block" id="toShop">Bekijk de collectie</button>`;
+      $("#toShop").onclick = () => { hideLayers(); $("#shop").scrollIntoView({ behavior: "smooth" }); };
+      return;
+    }
+    const sub = subtotal(), ship = sub >= FREE ? 0 : SHIP;
+    if (view === "checkout") {
+      $("#drawerTitle").textContent = "Afrekenen";
+      body.innerHTML = `<form class="form" id="coForm" novalidate>
+          <button type="button" class="back" id="backBag">‹ Terug naar winkelmand</button>
+          <label for="coName">Naam<input type="text" id="coName" autocomplete="name"></label>
+          <label for="coMail">E-mail<input type="email" id="coMail" autocomplete="email"></label>
+          <div class="row2">
+            <label for="coZip">Postcode<input type="text" id="coZip" autocomplete="postal-code" placeholder="1234 AB"></label>
+            <label for="coNr">Huisnummer<input type="text" id="coNr"></label>
+          </div>
+          <div class="pay" role="radiogroup" aria-label="Betaalmethode">
+            <label><input type="radio" name="pay" id="payIdeal" checked> iDEAL</label>
+            <label><input type="radio" name="pay" id="payLater"> Achteraf betalen</label>
+          </div>
+          <p class="demo-note">Voorbeeldwinkel: je gegevens blijven in dit venster en worden nergens heen gestuurd.</p>
+          <p class="err" id="coErr" role="alert"></p>
+        </form>`;
+      foot.innerHTML = `<div class="sum total"><span>Totaal</span><span>${fmt(sub + ship)}</span></div><button class="btn block" id="placeOrder">Bestelling plaatsen</button>`;
+      $("#backBag").onclick = () => { view = "bag"; renderBag(); };
+      const place = e => {
+        e && e.preventDefault();
+        const miss = ["coName", "coMail", "coZip", "coNr"].filter(id => !$("#" + id).value.trim());
+        if (miss.length) { $("#coErr").textContent = "Vul alle velden in om je bestelling te plaatsen."; $("#" + miss[0]).focus(); return; }
+        if (!/^\d{4}\s?[a-z]{2}$/i.test($("#coZip").value.trim())) { $("#coErr").textContent = "Gebruik een Nederlandse postcode, bijvoorbeeld 1234 AB."; $("#coZip").focus(); return; }
+        bag = []; store.set("linde-bag", bag); renderCount(); view = "done"; renderBag();
+      };
+      $("#coForm").onsubmit = place; $("#placeOrder").onclick = place;
+      return;
+    }
+    $("#drawerTitle").textContent = "Winkelmand";
+    body.innerHTML = bag.map((l, i) => {
+      const p = byId[l.id];
+      return `<div class="line">
+        <div class="thumb">${imgTag(p.img, p.alt)}</div>
+        <div><h4>${p.name}</h4><div class="sub">${l.opt || catName(p.cat)}</div>
+          <div class="qty"><button data-q="${i}" data-d="-1" aria-label="Eén minder">−</button><span>${l.qty}</span><button data-q="${i}" data-d="1" aria-label="Eén meer">+</button></div></div>
+        <div class="lp">${fmt(p.price * l.qty)}</div></div>`;
+    }).join("");
+    body.onclick = e => {
+      const b = e.target.closest("[data-q]"); if (!b) return;
+      const l = bag[+b.dataset.q]; l.qty += +b.dataset.d;
+      if (l.qty <= 0) bag.splice(+b.dataset.q, 1);
+      saveBag();
+    };
+    const left = FREE - sub;
+    foot.innerHTML = `
+      <div class="progress">${left > 0 ? `Nog ${fmt(left)} tot gratis bezorging` : "Je bestelling wordt gratis bezorgd"}<div class="bar"><i style="width:${Math.min(100, sub / FREE * 100)}%"></i></div></div>
+      <div class="sum"><span>Subtotaal</span><span>${fmt(sub)}</span></div>
+      <div class="sum"><span>Bezorging</span><span class="${ship ? "" : "free"}">${ship ? fmt(ship) : "Gratis"}</span></div>
+      <div class="sum total"><span>Totaal</span><span>${fmt(sub + ship)}</span></div>
+      <button class="btn block" id="toCheckout">Afrekenen</button>`;
+    $("#toCheckout").onclick = () => { view = "checkout"; renderBag(); };
+  }
+  $("#bagBtn").onclick = () => { if (view === "done") view = "bag"; renderBag(); showLayer($("#drawer")); setTimeout(() => $("#drawerClose").focus({ preventScroll: true }), 50); };
+  renderCount();
+
+  let tt;
+  function toast(msg) {
+    const t = $("#toast"); t.textContent = msg; t.classList.add("on");
+    clearTimeout(tt); tt = setTimeout(() => t.classList.remove("on"), 2400);
+  }
+})();
+</script>
+
+</body>
+</html>
