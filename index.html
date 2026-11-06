@@ -535,6 +535,12 @@ footer { background: var(--sand); color: var(--muted); font-size: 13px; padding-
   const byId = Object.fromEntries(P.map(p => [p.id, p]));
   const imgTag = (src, alt, lazy = true) => `<img class="photo" src="wonen/${src}.jpg" alt="${alt}"${lazy ? ' loading="lazy"' : ""}>`;
 
+  // Optional product.variantImages maps option labels to { img, alt } using files in wonen/.
+  function variantPhoto(product, option) {
+    const photo = product.variantImages && product.variantImages[option];
+    return photo ? { img: photo.img || product.img, alt: photo.alt || product.alt } : { img: product.img, alt: product.alt };
+  }
+
   const store = {
     get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } },
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
@@ -646,6 +652,9 @@ footer { background: var(--sand); color: var(--muted); font-size: 13px; padding-
     setTimeout(() => $("#sheetClose").focus({ preventScroll: true }), 50);
   }
   function paint() {
+    const photo = variantPhoto(cur, curOpt);
+    const image = $("#pImg img");
+    if (image) { image.src = `wonen/${photo.img}.jpg`; image.alt = photo.alt; }
     $("#qVal").textContent = qty;
     $("#addBtn").textContent = `In winkelmand · ${fmt(cur.price * qty)}`;
     if (cur.opt) {
@@ -660,6 +669,12 @@ footer { background: var(--sand); color: var(--muted); font-size: 13px; padding-
   /* ---------- Winkelmand ---------- */
   const SHIP = 5.95, FREE = 50;
   let view = "bag";
+  let checkoutDraft = {};
+  function rememberCheckout() {
+    if (!$("#coForm")) return;
+    ["coName", "coMail", "coZip", "coNr"].forEach(id => { checkoutDraft[id] = $("#" + id).value; });
+    checkoutDraft.payLater = $("#payLater").checked;
+  }
   function saveBag() { store.set("linde-bag", bag); renderCount(); if (!$("#drawer").hidden) renderBag(); }
   function renderCount() {
     const n = bag.reduce((a, l) => a + l.qty, 0);
@@ -703,13 +718,18 @@ footer { background: var(--sand); color: var(--muted); font-size: 13px; padding-
           <p class="err" id="coErr" role="alert"></p>
         </form>`;
       foot.innerHTML = `<div class="sum total"><span>Totaal</span><span>${fmt(sub + ship)}</span></div><button class="btn block" id="placeOrder">Bestelling plaatsen</button>`;
+      ["coName", "coMail", "coZip", "coNr"].forEach(id => { $("#" + id).value = checkoutDraft[id] || ""; });
+      $("#payLater").checked = !!checkoutDraft.payLater;
+      $("#payIdeal").checked = !checkoutDraft.payLater;
+      $("#coForm").oninput = rememberCheckout;
+      $("#coForm").onchange = rememberCheckout;
       $("#backBag").onclick = () => { view = "bag"; renderBag(); };
       const place = e => {
         e && e.preventDefault();
         const miss = ["coName", "coMail", "coZip", "coNr"].filter(id => !$("#" + id).value.trim());
         if (miss.length) { $("#coErr").textContent = "Vul alle velden in om je bestelling te plaatsen."; $("#" + miss[0]).focus(); return; }
         if (!/^\d{4}\s?[a-z]{2}$/i.test($("#coZip").value.trim())) { $("#coErr").textContent = "Gebruik een Nederlandse postcode, bijvoorbeeld 1234 AB."; $("#coZip").focus(); return; }
-        bag = []; store.set("linde-bag", bag); renderCount(); view = "done"; renderBag();
+        checkoutDraft = {}; bag = []; store.set("linde-bag", bag); renderCount(); view = "done"; renderBag();
       };
       $("#coForm").onsubmit = place; $("#placeOrder").onclick = place;
       return;
@@ -718,7 +738,7 @@ footer { background: var(--sand); color: var(--muted); font-size: 13px; padding-
     body.innerHTML = bag.map((l, i) => {
       const p = byId[l.id];
       return `<div class="line">
-        <div class="thumb">${imgTag(p.img, p.alt)}</div>
+        <div class="thumb">${imgTag(variantPhoto(p, l.opt).img, variantPhoto(p, l.opt).alt)}</div>
         <div><h4>${p.name}</h4><div class="sub">${l.opt || catName(p.cat)}</div>
           <div class="qty"><button data-q="${i}" data-d="-1" aria-label="Eén minder">−</button><span>${l.qty}</span><button data-q="${i}" data-d="1" aria-label="Eén meer">+</button></div></div>
         <div class="lp">${fmt(p.price * l.qty)}</div></div>`;
