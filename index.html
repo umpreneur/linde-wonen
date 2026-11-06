@@ -560,12 +560,17 @@ footer { background: var(--sand); color: var(--muted); font-size: 13px; padding-
     const o = e.target.closest("[data-open]");
     if (o) openProduct(o.dataset.open, e.target.closest(".quick"));
   });
-  $("#heroCta").onclick = () => { fCat = ""; render(); $("#shop").scrollIntoView({ behavior: "smooth" }); };
+  function showCollection() {
+    clearTimeout(qTimer);
+    fCat = ""; fQ = ""; $("#q").value = ""; render();
+    $("#shop").scrollIntoView({ behavior: "smooth" });
+  }
+  $("#heroCta").onclick = showCollection;
   $("#clearFilter").onclick = () => { fCat = ""; fQ = ""; $("#q").value = ""; render(); };
   $("#sort").onchange = e => { sort = e.target.value; render(); };
   let qTimer;
   $("#q").addEventListener("input", e => {
-    fQ = e.target.value.trim().toLowerCase(); render();
+    fQ = e.target.value.trim().toLowerCase(); fCat = ""; render();
     clearTimeout(qTimer);
     if (fQ) qTimer = setTimeout(() => $("#shop").scrollIntoView({ behavior: "smooth", block: "start" }), 500);
   });
@@ -676,7 +681,7 @@ footer { background: var(--sand); color: var(--muted); font-size: 13px; padding-
       $("#drawerTitle").textContent = "Winkelmand";
       body.innerHTML = `<div class="bag-empty"><svg viewBox="0 0 22 22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" d="M3.5 7.5h15l-1.2 12H4.7Z M7.5 7.5V6a3.5 3.5 0 0 1 7 0v1.5"/></svg><p>Je winkelmand is nog leeg.</p></div>`;
       foot.innerHTML = `<button class="btn block" id="toShop">Bekijk de collectie</button>`;
-      $("#toShop").onclick = () => { hideLayers(); $("#shop").scrollIntoView({ behavior: "smooth" }); };
+      $("#toShop").onclick = () => { hideLayers(); showCollection(); };
       return;
     }
     const sub = subtotal(), ship = sub >= FREE ? 0 : SHIP;
