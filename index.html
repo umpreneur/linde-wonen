@@ -728,6 +728,8 @@ footer { background: var(--sand); color: var(--muted); font-size: 13px; padding-
         e && e.preventDefault();
         const miss = ["coName", "coMail", "coZip", "coNr"].filter(id => !$("#" + id).value.trim());
         if (miss.length) { $("#coErr").textContent = "Vul alle velden in om je bestelling te plaatsen."; $("#" + miss[0]).focus(); return; }
+        if (!$("#coMail").validity.valid) { $("#coErr").textContent = "Vul een geldig e-mailadres in, bijvoorbeeld naam@voorbeeld.nl."; $("#coMail").focus(); return; }
+        if (!/^[1-9][0-9]*(?:\\s*[a-zA-Z]|\\s*[-/]\\s*[a-zA-Z0-9]+)?$/.test($("#coNr").value.trim())) { $("#coErr").textContent = "Vul een geldig huisnummer in, bijvoorbeeld 12, 12A of 12-2."; $("#coNr").focus(); return; }
         if (!/^\d{4}\s?[a-z]{2}$/i.test($("#coZip").value.trim())) { $("#coErr").textContent = "Gebruik een Nederlandse postcode, bijvoorbeeld 1234 AB."; $("#coZip").focus(); return; }
         checkoutDraft = {}; bag = []; store.set("linde-bag", bag); renderCount(); view = "done"; renderBag();
       };
