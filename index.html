@@ -63,9 +63,11 @@ img { display: block; }
 
 .demo-banner { padding: 9px 16px; background: var(--accent); color: var(--accent-fg); text-align: center; font-size: 13px; line-height: 1.5; letter-spacing: 0; }
 
+.demo-header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; }
+
 /* Menu */
 .nav {
-  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  position: relative;
   background: var(--nav); backdrop-filter: saturate(160%) blur(20px); -webkit-backdrop-filter: saturate(160%) blur(20px);
   border-bottom: 1px solid var(--line);
 }
@@ -299,6 +301,7 @@ footer { background: var(--sand); color: var(--muted); font-size: 13px; padding-
 </style>
 </head>
 <body>
+<header class="demo-header">
 <aside class="demo-banner" aria-label="Demomelding"><strong>Demo-webshop</strong> · Bekijk en test de winkel. Je plaatst geen echte bestelling en betaalt niets.</aside>
 
 
@@ -319,6 +322,7 @@ footer { background: var(--sand); color: var(--muted); font-size: 13px; padding-
     </button>
   </div>
 </nav>
+</header>
 
 <main id="top">
   <section class="cats gutter" aria-label="Categorieën">
