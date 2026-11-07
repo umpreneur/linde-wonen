@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Linde Wonen: vazen, lampen, kussens, servies en kleine meubels.">
+<script src="i18n-en.js"></script>
+<script src="i18n.js"></script>
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
 <title>Linde Wonen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -73,7 +75,7 @@ img { display: block; }
   background: var(--nav); backdrop-filter: saturate(160%) blur(20px); -webkit-backdrop-filter: saturate(160%) blur(20px);
   border-bottom: 1px solid var(--line);
 }
-.nav-in { height: 64px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 24px; }
+.nav-in { height: 64px; display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 24px; }
 .logo { display: flex; align-items: center; gap: 10px; color: var(--fg); font-weight: 600; font-size: 21px; letter-spacing: -0.03em; }
 .logo:hover { text-decoration: none; }
 .logo svg { width: 26px; height: 26px; color: var(--accent); }
@@ -283,7 +285,7 @@ footer { background: var(--sand); color: var(--muted); font-size: 13px; padding-
   .stories { grid-template-columns: 1fr; }
 }
 @media (max-width: 700px) {
-  .nav-in { grid-template-columns: auto 1fr auto; gap: 12px; }
+  .nav-in { grid-template-columns: auto 1fr auto auto; gap: 12px; }
   .bag-label { display: none; }
   .grid { grid-template-columns: repeat(2, 1fr); gap: 28px 14px; }
   .cat-row { justify-content: flex-start; }
@@ -585,7 +587,7 @@ footer { background: var(--sand); color: var(--muted); font-size: 13px; padding-
   function render() {
     document.querySelectorAll(".cat").forEach(b => b.setAttribute("aria-pressed", b.dataset.cat === fCat));
     let list = P.filter(p => (!fCat || p.cat === fCat) &&
-      (!fQ || (p.name + " " + catName(p.cat) + " " + p.desc).toLowerCase().includes(fQ)));
+      (!fQ || [p.name, catName(p.cat), p.desc].map(s => s + " " + (window.I18N ? I18N.t(s) : "")).join(" ").toLowerCase().includes(fQ)));
     list = list.slice().sort(sort === "low" ? (a, b) => a.price - b.price : sort === "high" ? (a, b) => b.price - a.price : (a, b) => a.rank - b.rank);
     $("#shopLabel").textContent = fQ ? `Resultaten voor ‘${$("#q").value.trim()}’.` : fCat ? `${catName(fCat)}.` : "Nieuw binnen.";
     const cf = $("#clearFilter");
